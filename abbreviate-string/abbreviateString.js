@@ -1,0 +1,5 @@
+function abbreviateString() {
+  
+}
+
+export { abbreviateString };
