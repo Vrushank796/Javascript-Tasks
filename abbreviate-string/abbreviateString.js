@@ -1,5 +1,0 @@
-function abbreviateString() {
-  
-}
-
-export { abbreviateString };
