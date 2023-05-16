@@ -1,55 +1,30 @@
 function sumFibs(num) {
-  if (typeof num === "number") {
-    let temp = [1, 1];
-    let sum = 0;
-
-    //create array with fibonnaci numbers less than num
-    for (let i = 2; i < num; i++) {
-      let tempSum = temp[i - 1] + temp[i - 2];
-      if (tempSum < num) {
-        temp.push(tempSum);
-      } else {
-        break;
-      }
+  let prevFib = 0;
+  let currFib = 1;
+  let nextFib = 0;
+  let sum = 0;
+  while (currFib < num) {
+    if (currFib % 2 !== 0) {
+      sum += currFib;
     }
-
-    //calculate fibonnaci sum of odd fibonnaci numbers less than 10
-    temp.map((x) => {
-      if (x % 2 != 0) {
-        sum = sum + x;
-      }
-    });
-    return sum;
-  } else {
-    return num;
+    nextFib = prevFib + currFib;
+    prevFib = currFib;
+    currFib = nextFib;
   }
+
+  return sum;
 }
 
 //memoized function-> save previous result using closure and lexical scoping
 function cacheFunction(fn) {
-  var sum = 0;
-  var boolean = false;
-  return function (fn) {
-    if (typeof fn !== "number") {
-      //for boolean argument
-      if (boolean == false) {
-        boolean = sumFibs(fn);
-        console.log("first" + boolean);
-        return sum;
-      } else {
-        console.log("second" + boolean);
-        return sum;
-      }
+  const cache = {};
+  return (fn) => {
+    if (fn in cache) {
+      return cache[fn];
     } else {
-      //for number argument
-      if (sum == 0) {
-        sum = sumFibs(fn);
-        console.log("first" + sum);
-        return sum;
-      } else {
-        console.log("second" + sum);
-        return sum;
-      }
+      let result = sumFibs(fn);
+      cache[fn] = result;
+      return result;
     }
   };
 }
