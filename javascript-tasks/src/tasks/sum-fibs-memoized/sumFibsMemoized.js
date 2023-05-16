@@ -18,12 +18,12 @@ function sumFibs(num) {
 //memoized function-> save previous result using closure and lexical scoping
 function cacheFunction(fn) {
   const cache = {};
-  return (fn) => {
-    if (fn in cache) {
-      return cache[fn];
+  return (val) => {
+    if (val in cache) {
+      return cache[val];
     } else {
-      let result = sumFibs(fn);
-      cache[fn] = result;
+      let result = fn(val);
+      cache[val] = result;
       return result;
     }
   };
